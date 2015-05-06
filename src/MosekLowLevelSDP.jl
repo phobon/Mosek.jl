@@ -142,8 +142,8 @@ function addsdpconstr!(m::MosekMathProgModel, matvaridx, matcoefidx, scalidx, sc
                 p += 1
                 while (p <= np && barj[perm[p]] == j) p += 1 end
                 
-                const JJ = map(L -> int32(floor(n+0.5-sqrt((n+0.5)^2-2*L))), barvarij[perm[b:p-1]])
-                const II = map(i -> int32(barvarij[perm[i+b-1]]-n*II[i]), 1:p-b-1)
+                const JJ = map(L -> Int32(floor(n+0.5-sqrt((n+0.5)^2-2*L))), barvarij[perm[b:p-1]])
+                const II = map(i -> Int32(barvarij[perm[i+b-1]]-n*II[i]), 1:p-b-1)
                 const VV = barcof[perm[b:p-1]]
 
                 const matidx = appendsparsesymmat(m.task,dimbarvarj,II,JJ,VV)
