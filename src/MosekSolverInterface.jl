@@ -258,7 +258,7 @@ function loadproblem!(m::     MosekMathProgModel,
   m.qconmap    = Int32[]
 
   # input coefficients
-  putclist(m.task, Int32[1:ncols], obj)
+  putclist(m.task, Int32[1:ncols;], obj)
   putacolslice(m.task, 1, ncols+1, A.colptr[1:ncols], A.colptr[2:ncols+1], A.rowval, A.nzval)
   setsense!(m, sense)
 
