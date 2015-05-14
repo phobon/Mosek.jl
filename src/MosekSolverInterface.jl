@@ -174,18 +174,18 @@ function loadproblem!(m::        MosekMathProgModel,
     readdata(m.task, filename)
 
     m.numvar     = getnumvar(m.task)
-    m.varmap     = Int32[1:m.numvar]
+    m.varmap     = Int32[1:m.numvar;]
     m.barvarij   = zeros(Int64,m.numvar)
     m.binvarflag = fill(false,length(varmap)) 
     m.numbarvar  = getnumbarvar(m.task)
-    m.barvarmap  = Int32[1:m.numbarvar]
+    m.barvarmap  = Int32[1:m.numbarvar;]
     
     let numqonz = getnumqobjnz(m.task),
         numqconknz = Int32[ getnumqconknz(m.task,i) for i in 1:getnumcon(m.task) ]
         
         if numqonz + sum(numqconknz) == 0
             m.numcon     = getnumcon(m.task)
-            m.conmap     = Int32[1:m.numcon]
+            m.conmap     = Int32[1:m.numcon;]
             m.conslack   = zeros(Int32,m.numcon)
             m.barconij   = zeros(Int64,m.numcon)
             m.numqcon    = 0
@@ -246,11 +246,11 @@ function loadproblem!(m::     MosekMathProgModel,
   appendcons(m.task,nrows)
 
   m.numvar     = ncols
-  m.varmap     = Int32[1:m.numvar]
+  m.varmap     = Int32[1:m.numvar;]
   m.barvarij   = zeros(Int64,m.numvar)
   m.binvarflag = fill(false,m.numvar) 
   m.numcon     = nrows
-  m.conmap     = Int32[1:m.numcon]
+  m.conmap     = Int32[1:m.numcon;]
   m.conslack   = zeros(Int32,m.numcon)
   m.barconij   = zeros(Int64,m.numcon)
   
@@ -258,7 +258,7 @@ function loadproblem!(m::     MosekMathProgModel,
   m.qconmap    = Int32[]
 
   # input coefficients
-  putclist(m.task, Int32[1:ncols], obj)
+  putclist(m.task, Int32[1:ncols;], obj)
   putacolslice(m.task, 1, ncols+1, A.colptr[1:ncols], A.colptr[2:ncols+1], A.rowval, A.nzval)
   setsense!(m, sense)
 
